@@ -1,0 +1,34 @@
+# Makefile_01
+# Basic version
+
+all : dirs manager pa pb
+
+dirs:
+	mkdir -p obj/ exec/
+
+manager: obj/manager.o 
+	gcc -o exec/manager obj/manager.o -lpthread -lrt
+
+pa: obj/pa.o 
+	gcc -o exec/pa obj/pa.o -lpthread -lrt
+
+pb: obj/pb.o 
+	gcc -o exec/pb obj/pb.o -lpthread -lrt
+
+obj/manager.o: src/manager.c
+	gcc -Iinclude/ -c -Wall -ansi src/manager.c -o obj/manager.o
+
+obj/pa.o: src/pa.c
+	gcc -Iinclude/ -c -Wall -ansi src/pa.c -o obj/pa.o
+
+obj/pb.o: src/pb.c
+	gcc -Iinclude/ -c -Wall -ansi src/pb.c -o obj/pb.o
+
+test:
+	./exec/manager 3 2 5
+
+solution:
+	./exec/manager 2 3 4
+
+clean : 
+	rm -rf *~ core obj/ exec/ include/*~ src/*~

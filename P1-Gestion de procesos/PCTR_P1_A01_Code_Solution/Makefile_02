@@ -1,0 +1,43 @@
+# Makefile_02
+# Adding variables
+
+DIROBJ := obj/
+DIREXE := exec/
+DIRHEA := include/
+DIRSRC := src/
+
+CFLAGS := -I$(DIRHEA) -c -Wall -ansi
+LDLIBS := -lpthread -lrt
+CC := gcc
+
+all : dirs manager pa pb
+
+dirs:
+	mkdir -p $(DIROBJ) $(DIREXE)
+
+manager: $(DIROBJ)manager.o 
+	$(CC) -o $(DIREXE)manager $(DIROBJ)manager.o $(LDLIBS)
+
+pa: $(DIROBJ)pa.o 
+	$(CC) -o $(DIREXE)pa $(DIROBJ)pa.o $(LDLIBS)
+
+pb: $(DIROBJ)pb.o 
+	$(CC) -o $(DIREXE)pb $(DIROBJ)pb.o $(LDLIBS)
+
+$(DIROBJ)manager.o: $(DIRSRC)manager.c
+	$(CC) $(CFLAGS) $(DIRSRC)manager.c -o $(DIROBJ)manager.o
+
+$(DIROBJ)pa.o: $(DIRSRC)pa.c
+	$(CC) $(CFLAGS) $(DIRSRC)pa.c -o $(DIROBJ)pa.o
+
+$(DIROBJ)pb.o: $(DIRSRC)pb.c
+	$(CC) $(CFLAGS) $(DIRSRC)pb.c -o $(DIROBJ)pb.o
+
+test:
+	./$(DIREXE)manager 3 2 5
+
+solution:
+	./$(DIREXE)manager 2 3 4
+
+clean : 
+	rm -rf *~ core $(DIROBJ) $(DIREXE) $(DIRHEA)*~ $(DIRSRC)*~
